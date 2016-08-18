@@ -7,6 +7,7 @@
 //
 
 #import "PBWebViewController.h"
+#import "CSATargetContext.h"
 
 @interface PBWebViewController () <UIPopoverControllerDelegate>
 
@@ -96,7 +97,7 @@
     [super viewWillDisappear:animated];
     [self.webView stopLoading];
     self.webView.delegate = nil;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [CSATargetContext.sharedContext.delegate setTargetNetworkActivityIndicatorVisible:NO];
     
     if (self.toolbarPreviouslyHidden && self.showsNavigationToolbar) {
         [self.navigationController setToolbarHidden:YES animated:YES];
@@ -214,7 +215,7 @@
 - (void)finishLoad
 {
     [self toggleState];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [CSATargetContext.sharedContext.delegate setTargetNetworkActivityIndicatorVisible:NO];
 }
 
 #pragma mark - Button actions
@@ -256,7 +257,7 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [CSATargetContext.sharedContext.delegate setTargetNetworkActivityIndicatorVisible:YES];
     [self toggleState];
 }
 

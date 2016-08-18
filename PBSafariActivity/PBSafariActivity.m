@@ -7,6 +7,7 @@
 //
 
 #import "PBSafariActivity.h"
+#import "CSATargetContext.h"
 
 @interface PBSafariActivity ()
 
@@ -34,7 +35,7 @@
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
 {
     for (id activityItem in activityItems) {
-        if ([activityItem isKindOfClass:[NSURL class]] && [[UIApplication sharedApplication] canOpenURL:activityItem]) {
+        if ([activityItem isKindOfClass:[NSURL class]] && [CSATargetContext.sharedContext.delegate targetCanOpenURL:activityItem]) {
             return YES;
         }
     }
@@ -54,7 +55,7 @@
 
 - (void)performActivity
 {
-    [[UIApplication sharedApplication] openURL:self.URL];
+    [CSATargetContext.sharedContext.delegate targetOpenURL:self.URL];
     [self activityDidFinish:YES];
 }
 
